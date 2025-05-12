@@ -36,13 +36,15 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-white">
       <div className="mb-8">
-        <Image 
-          src="/img/logobigw.png" 
-          alt="FarmLand Logo" 
-          width={198} 
-          height={30} 
-          className="mx-auto"
-        />
+        <Link href="/">
+          <Image 
+            src="/img/logobigw.png" 
+            alt="FarmLand Logo" 
+            width={198} 
+            height={30} 
+            className="mx-auto"
+          />
+        </Link>
       </div>
 
       <div className="w-full max-w-md sm:max-w-xl p-6 sm:p-8 space-y-8 bg-white rounded-[16px] border border-[#e8e8e8]">

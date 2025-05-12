@@ -48,15 +48,17 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen flex flex-col gap-12 items-center justify-center px-4 py-8 sm:px-8 md:px-16 bg-white">
-  <div>
-    <Image 
-      src="/img/logobigw.png" 
-      alt="FarmLand Logo" 
-      width={198} 
-      height={30} 
-      className="mx-auto"
-    />
-  </div>
+    <div className="mb-8">
+        <Link href="/">
+          <Image 
+            src="/img/logobigw.png" 
+            alt="FarmLand Logo" 
+            width={198} 
+            height={30} 
+            className="mx-auto"
+          />
+        </Link>
+      </div>
 
   <div className="w-full max-w-xl p-6 sm:p-8 space-y-6 bg-white rounded-2xl border border-[#e8e8e8]">
     <div className="text-center">
