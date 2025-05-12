@@ -22,7 +22,7 @@ const Faqs = () => {
             </div>
             <div className="bg-green-50 rounded-xl p-6 shadow-lg">
               <h3 className="text-xl font-semibold text-green-800 mb-2">Can I integrate with my existing farm management software?</h3>
-              <p className="text-gray-600">Yes, FarmLand AI integrates with most popular farm management software through our API. We also support direct CSV imports if you're using other systems.</p>
+              <p className="text-gray-600">Yes, FarmLand AI integrates with most popular farm management software through our API. We also support direct CSV imports if you&apos;re using other systems.</p>
             </div>
             <div className="bg-green-50 rounded-xl p-6 shadow-lg">
               <h3 className="text-xl font-semibold text-green-800 mb-2">How often is satellite imagery updated?</h3>
