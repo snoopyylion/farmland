@@ -22,7 +22,7 @@ const DashboardPage = () => {
   const [, setCurrentSlide] = useState<number>(0);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [autoSlideInterval, setAutoSlideInterval] = useState<NodeJS.Timeout | null>(null);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isPaused,] = useState<boolean>(false);
 
   // Effect to detect system color scheme
   useEffect(() => {
