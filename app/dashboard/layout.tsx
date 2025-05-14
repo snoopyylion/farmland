@@ -10,14 +10,13 @@ export default function DashboardLayout({
 }) {
   const [collapsed, setCollapsed] = useState(false)
 
-  const sidebarWidth = collapsed ? '5rem' : '16rem' // Tailwind w-20 = 5rem, w-64 = 16rem
-
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <main
-        className="transition-all duration-300 p-4 bg-white min-h-screen w-full"
-        style={{ marginLeft: sidebarWidth }}
+        className={`transition-all duration-300 flex-1 bg-white ${
+          collapsed ? 'ml-20' : 'ml-[282px]'
+        }`}
       >
         {children}
       </main>
