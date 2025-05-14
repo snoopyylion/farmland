@@ -310,26 +310,26 @@ const DashboardPage = () => {
 
               {/* Progress Bar */}
               <div className={`level-slider relative h-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full mb-4`}>
-                <div className="absolute top-0 left-0 h-full w-1/2 bg-yellow-400 rounded-full"></div>
+                <div className="absolute top-0 left-0 h-full w-1/2 bg-[#E8B800] rounded-full"></div>
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-yellow-400 rounded-full"></div>
               </div>
 
               {/* Level Indicators */}
               <div className="level-bottom flex justify-between items-center">
                 <div className="harvest-hero text-center">
-                  <div className="number font-bold text-lg font-sora">
+                  <div className="number font-light mb-1 text-[12px] leading-[100%] font-sora">
                     <p>1,500</p>
                   </div>
-                  <div className={`text text-xs ${themeClasses.subtext} font-sora`}>
+                  <div className={`text-[10px] leading-[100%] font-thin  ${themeClasses.subtext} font-sora`}>
                     <p>Harvest Hero</p>
                   </div>
                 </div>
 
                 <div className="harvest-lord text-center">
-                  <div className="number font-bold text-lg font-sora">
+                  <div className="number font-light mb-1 text-[12px] leading-[100%] font-sora">
                     <p>3000</p>
                   </div>
-                  <div className={`text text-xs ${themeClasses.subtext} font-sora`}>
+                  <div className={`text-[10px] leading-[100%] font-thin ${themeClasses.subtext} font-sora`}>
                     <p>Harvest Lord</p>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ const DashboardPage = () => {
             {/* ===== ACHIEVEMENTS SECTION ===== */}
             <div className={`achievement-div ${themeClasses.card} p-4 rounded-lg`}>
               <div className="achievement-header mb-3">
-                <p className={`text-xs font-bold ${themeClasses.lightText} font-sora`}>ACHIEVEMENT</p>
+                <p className={`text-[12px] leading-[100%] font-light ${themeClasses.lightText} font-sora`}>ACHIEVEMENT</p>
               </div>
 
               {/* Achievement Items */}
@@ -347,33 +347,33 @@ const DashboardPage = () => {
                 {/* Achievement 1 */}
                 <div className="first-achievement flex items-center">
                   <div className="img mr-3">
-                    <Image src="/icons/harvest-hero.png" alt="achievement" width={36} height={36} />
+                    <Image src="/icons/harvest-hero.png" alt="achievement" width={40} height={40} />
                   </div>
                   <div className="text">
-                    <div><p className="font-semibold font-sora">Harvest Hero</p></div>
-                    <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Logged 10 Harvest</p></div>
+                    <div><p className="font-semibold mb-1 text-[14px] leading-[100%] text-[#828282] font-sora">Harvest Hero</p></div>
+                    <div><p className={`font-light text-[12px] leading-[100%] text-[#828282] ${themeClasses.subtext} font-sora`}>Logged 10 Harvest</p></div>
                   </div>
                 </div>
 
                 {/* Achievement 2 */}
                 <div className="second-achievement flex items-center">
                   <div className="img mr-3">
-                    <Image src="/icons/data-cham.png" alt="achievement" width={36} height={36} />
+                    <Image src="/icons/data-cham.png" alt="achievement" width={40} height={40} />
                   </div>
                   <div className="text">
-                    <div><p className="font-semibold font-sora">Data Champion</p></div>
-                    <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Consistent for 7 days</p></div>
+                    <div><p className="font-semibold mb-1 text-[14px] leading-[100%] text-[#828282] font-sora">Data Champion</p></div>
+                    <div><p className={`font-light text-[12px] leading-[100%] text-[#828282] ${themeClasses.subtext} font-sora`}>Consistent for 7 days</p></div>
                   </div>
                 </div>
 
                 {/* Achievement 3 */}
                 <div className="third-achievement flex items-center">
                   <div className="img mr-3">
-                    <Image src="/icons/heart-storage.png" alt="achievement" width={36} height={36} />
+                    <Image src="/icons/heart-storage.png" alt="achievement" width={40} height={40} />
                   </div>
                   <div className="text">
-                    <div><p className="font-semibold font-sora">Heart of State Storage</p></div>
-                    <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Best storage facilities</p></div>
+                    <div><p className="font-semibold mb-1 text-[14px] leading-[100%] text-[#828282] font-sora">Heart of State Storage</p></div>
+                    <div><p className={`font-light text-[12px] leading-[100%] text-[#828282] ${themeClasses.subtext} font-sora`}>Best storage facilities</p></div>
                   </div>
                 </div>
               </div>
@@ -382,35 +382,35 @@ const DashboardPage = () => {
             {/* ===== ACTIVITY SECTION ===== */}
             <div className={`activity-div ${themeClasses.card} p-4 rounded-lg`}>
               <div className="activity-header mb-3">
-                <p className={`text-xs font-bold ${themeClasses.lightText} font-sora`}>MY ACTIVITY</p>
+                <p className={`text-[12px] leading-[100%] font-light ${themeClasses.lightText} font-sora`}>MY ACTIVITY</p>
               </div>
 
               {/* Activity Grid */}
               <div className="activity-content grid grid-cols-2 gap-3">
                 {/* Total Points */}
                 <div className={`activity ${themeClasses.lightBg} p-3 rounded-lg`}>
-                  <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Total Points</p></div>
+                  <div><p className={`text-[12px] font-extralight leading-[100%] text-[#333] ${themeClasses.subtext} font-sora`}>Total Points</p></div>
                   <div className="flex items-center space-x-2 mt-1">
-                    <div><Image src="/icons/Coin.png" alt="points" width={20} height={20} /></div>
-                    <div><p className="font-bold font-sora">2100</p></div>
+                    <div><Image src="/icons/Coin.png" alt="points" width={24} height={24} /></div>
+                    <div><p className="font-normal text-[14px] leading-[100%] font-sora">2100</p></div>
                   </div>
                 </div>
 
                 {/* Quests Joined */}
                 <div className={`activity ${themeClasses.lightBg} p-3 rounded-lg`}>
-                  <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Quest joined</p></div>
+                  <div><p className={`text-[12px] font-extralight leading-[100%] text-[#333] ${themeClasses.subtext} font-sora`}>Quest joined</p></div>
                   <div className="flex items-center space-x-2 mt-1">
-                    <div><Image src="/icons/magic-star.png" alt="quests" width={20} height={20} /></div>
-                    <div><p className="font-bold font-sora">3</p></div>
+                    <div><Image src="/icons/magic-star.png" alt="quests" width={24} height={24} /></div>
+                    <div><p className="font-normal text-[14px] leading-[100%] font-sora">3</p></div>
                   </div>
                 </div>
 
                 {/* League */}
                 <div className={`activity ${themeClasses.lightBg} p-3 rounded-lg`}>
-                  <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>League</p></div>
+                  <div><p className={`text-[12px] font-extralight leading-[100%] text-[#333] ${themeClasses.subtext} font-sora`}>League</p></div>
                   <div className="flex items-center space-x-2 mt-1">
-                    <div><Image src="/icons/Leaderboard.png" alt="league" width={20} height={20} /></div>
-                    <div><p className="font-bold text-sm font-sora">Harvester&apos;s L</p></div>
+                    <div><Image src="/icons/Leaderboard.png" alt="league" width={24} height={24} /></div>
+                    <div><p className="font-normal text-[14px] leading-[100%] font-sora">Harvester&apos;s L</p></div>
                   </div>
                 </div>
 
@@ -419,7 +419,7 @@ const DashboardPage = () => {
                   <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>Current streak</p></div>
                   <div className="flex items-center space-x-2 mt-1">
                     <div><Image src="/icons/Streak_On.png" alt="streak" width={20} height={20} /></div>
-                    <div><p className="font-bold font-sora">3</p></div>
+                    <div><p className="font-normal text-[14px] leading-[100%] font-sora">3</p></div>
                   </div>
                 </div>
               </div>
