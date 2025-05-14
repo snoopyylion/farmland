@@ -410,7 +410,7 @@ const DashboardPage = () => {
                   <div><p className={`text-xs ${themeClasses.subtext} font-sora`}>League</p></div>
                   <div className="flex items-center space-x-2 mt-1">
                     <div><Image src="/icons/Leaderboard.png" alt="league" width={20} height={20} /></div>
-                    <div><p className="font-bold text-sm font-sora">Harvester's L</p></div>
+                    <div><p className="font-bold text-sm font-sora">Harvester&apos;s L</p></div>
                   </div>
                 </div>
 
