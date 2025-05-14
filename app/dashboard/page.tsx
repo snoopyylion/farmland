@@ -88,18 +88,6 @@ const DashboardPage = () => {
     };
   }, [isPaused, slides.length]); // Restart interval when pause state changes or slides change
 
-  // Handle slider interactions
-  const handleSliderInteraction = () => {
-    setIsPaused(true);
-
-    // Use a cleanup timeout to resume auto-sliding
-    const timeoutId = setTimeout(() => {
-      setIsPaused(false);
-    }, 8000);
-
-    return () => clearTimeout(timeoutId);
-  };
-
   // Update handleSlideChange for dots navigation
 
 
