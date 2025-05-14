@@ -27,7 +27,7 @@ const Sidebar = ({ collapsed, setCollapsed }: SidebarProps) => {
   return (
     <aside
       className={clsx(
-        'fixed top-0 left-0 h-dvh bg-[#132A21] text-pink-100 shadow-lg flex flex-col justify-between transition-all duration-300 z-50',
+        'fixed top-0 left-0 h-dvh bg-[#132A21] text-pink-100 shadow-lg items-center flex flex-col justify-between transition-all duration-300 z-50',
         collapsed ? 'w-20' : 'w-[282px]'
       )}
     >
