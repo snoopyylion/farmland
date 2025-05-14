@@ -67,9 +67,9 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
     };
 
     return (
-        <div className="w-full">
-            {/* Slide container */}
-            <div className="relative min-h-[250px] md:min-h-[280px]">
+        <div className="w-full relative">
+            {/* Slide container - Adjusted height for better responsiveness */}
+            <div className="relative min-h-[360px] xs:min-h-[320px] sm:min-h-[260px] md:min-h-[280px] lg:min-h-[300px] mb-8">
                 {slides.map((slide, index) => {
                     const isActive = index === currentSlide;
                     const isNext = index === (currentSlide + 1) % slides.length;
@@ -79,7 +79,7 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
                         <div
                             key={index}
                             className={clsx(
-                                'absolute left-0 w-full px-4 transition-all duration-700 ease-in-out',
+                                'absolute left-0 w-full px-2 sm:px-4 transition-all duration-700 ease-in-out',
                                 {
                                     'top-0 z-20 opacity-100 pointer-events-auto': isActive,
                                     'top-[20px] z-10 opacity-70 pointer-events-none scale-[0.97]': isNext,
@@ -88,44 +88,44 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
                                 }
                             )}
                         >
-                            <div className={`${themeClasses.card} border-[1px] rounded-lg overflow-hidden max-w-4xl mx-auto shadow-sm`}>
-                                <div className="p-4">
-                                    <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                                        {/* Slider Image */}
-                                        <div className="slider-image flex-shrink-0">
+                            <div className={`${themeClasses.card} border-[1px] rounded-lg overflow-hidden w-full max-w-4xl mx-auto shadow-sm`}>
+                                <div className="p-3 sm:p-4">
+                                    <div className="flex flex-col sm:flex-row items-center sm:items-center">
+                                        {/* Slider Image - Adjusted size for smaller screens */}
+                                        <div className="slider-image flex-shrink-0 w-full sm:w-auto flex justify-center sm:justify-start">
                                             <Image
                                                 src={slide.image}
                                                 width={189}
                                                 height={195}
                                                 alt="slider"
-                                                className="rounded-[8px] object-cover"
+                                                className="rounded-[8px] object-cover w-[120px] h-[120px] xs:w-[150px] xs:h-[150px] sm:w-[189px] sm:h-[195px]"
                                             />
                                         </div>
 
                                         {/* Slider Content */}
-                                        <div className="slider-right ml-0 sm:ml-6 mt-4 sm:mt-0 flex flex-col space-y-2 sm:space-y-3">
+                                        <div className="slider-right ml-0 sm:ml-6 mt-3 sm:mt-0 flex flex-col space-y-1 sm:space-y-3 w-full text-center sm:text-left">
                                             <div className="slider-tag">
-                                                <p className={`text-[12px] leading-[145%] font-medium ${themeClasses.lightText} font-sora`}>
+                                                <p className={`text-[10px] xs:text-[11px] sm:text-[12px] leading-[145%] font-medium ${themeClasses.lightText} font-sora`}>
                                                     {slide.tag}
                                                 </p>
                                             </div>
                                             <div className="slider-main">
-                                                <h3 className="text-[20px] leading-[145%] font-semibold font-sora">
+                                                <h3 className="text-[16px] xs:text-[18px] sm:text-[20px] leading-[145%] font-semibold font-sora">
                                                     {slide.title}
                                                 </h3>
                                             </div>
                                             <div className="slider-text">
-                                                <p className={`text-[12px] leading-[150%] font-light ${themeClasses.subtext} font-sora`}>
+                                                <p className={`text-[10px] xs:text-[11px] sm:text-[12px] leading-[150%] font-light ${themeClasses.subtext} font-sora`}>
                                                     {slide.text}
                                                 </p>
                                             </div>
                                             <div className="slider-button">
-                                                <button className="button bg-[#EBFDEB] leading-[145%] text-green-800 p-[8px] gap-[8px] rounded-full font-sora font-light text-[12px] inline-block">
+                                                <button className="button bg-[#EBFDEB] leading-[145%] text-green-800 p-[5px] xs:p-[6px] sm:p-[8px] gap-[8px] rounded-full font-sora font-light text-[10px] xs:text-[11px] sm:text-[12px] inline-block">
                                                     {slide.points}
                                                 </button>
                                             </div>
-                                            <div className="slider-big-button">
-                                                <div className="bg-[#2E6650] text-white p-[8px] gap-[8px] w-[99px] h-[33px] rounded-full text-center cursor-pointer hover:bg-green-700 transition-colors font-normal text-[12px] leading-[145%] font-sora">
+                                            <div className="slider-big-button flex justify-center sm:justify-start">
+                                                <div className="bg-[#2E6650] text-white p-[6px] xs:p-[8px] gap-[8px] w-[80px] xs:w-[90px] sm:w-[99px] h-[28px] xs:h-[30px] sm:h-[33px] rounded-full text-center cursor-pointer hover:bg-green-700 transition-colors font-normal text-[10px] xs:text-[11px] sm:text-[12px] leading-[145%] font-sora flex items-center justify-center">
                                                     <p>Start quest</p>
                                                 </div>
                                             </div>
@@ -138,30 +138,30 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
                 })}
             </div>
 
-            {/* Slide indicators */}
-            <div className="flex justify-center mt-4">
-                <div className="flex items-center space-x-0">
+            {/* Slide indicators - Repositioned for better placement */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center">
+                <div className="flex items-center space-x-0 bg-white/80 dark:bg-gray-800/80 px-3 py-1 rounded-full shadow-sm">
                     <div>
                         <button
                             onClick={handlePrevSlide}
                             aria-label="Previous slide"
-                            className="flex items-center justify-center"
+                            className="flex items-center justify-center w-8 h-8"
                         >
-                            <Image src="/icons/back.png" alt="Previous" width={32} height={24} className="w-5 h-5" />
+                            <Image src="/icons/back.png" alt="Previous" width={32} height={24} className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                     </div>
-                    <div className="flex items-center mx-2">
+                    <div className="flex items-center mx-1 sm:mx-2">
                         {slides.map((_, index) => (
                             <React.Fragment key={index}>
                                 <button
                                     onClick={() => handleSlideChange(index)}
                                     className={clsx(
-                                        'w-2 h-2 rounded-full transition-all duration-300',
+                                        'w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300',
                                         index === currentSlide ? 'bg-green-600' : 'bg-gray-300'
                                     )}
                                     aria-label={`Go to slide ${index + 1}`}
                                 />
-                                {index < slides.length - 1 && <span className="w-[6px]"></span>}
+                                {index < slides.length - 1 && <span className="w-[4px] sm:w-[6px]"></span>}
                             </React.Fragment>
                         ))}
                     </div>
@@ -169,9 +169,9 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
                         <button
                             onClick={handleNextSlide}
                             aria-label="Next slide"
-                            className="flex items-center justify-center"
+                            className="flex items-center justify-center w-8 h-8"
                         >
-                            <Image src="/icons/forward.png" alt="Next" width={32} height={24} className="w-5 h-5" />
+                            <Image src="/icons/forward.png" alt="Next" width={32} height={24} className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                     </div>
                 </div>
