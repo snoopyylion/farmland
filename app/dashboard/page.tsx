@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
+import Slider from '@/components/Slider';
 
 // Define types for our slide data
 type SlideData = {
@@ -18,8 +19,10 @@ type OptionType = 'loss-prediction' | 'harvest-analytic';
 const DashboardPage = () => {
   // State management
   const [activeOption, setActiveOption] = useState<OptionType>('loss-prediction');
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [, setCurrentSlide] = useState<number>(0);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [autoSlideInterval, setAutoSlideInterval] = useState<NodeJS.Timeout | null>(null);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   // Effect to detect system color scheme
   useEffect(() => {
@@ -61,10 +64,44 @@ const DashboardPage = () => {
     }
   ];
 
-  // Event handlers
-  const handleSlideChange = (index: number): void => {
-    setCurrentSlide(index);
+
+  // Initialize auto-sliding
+  useEffect(() => {
+    // Setup the auto-sliding interval
+    const startAutoSlide = () => {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+
+      const interval = setInterval(() => {
+        if (!isPaused) {
+          setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }
+      }, 5000); // Change slide every 5 seconds
+
+      setAutoSlideInterval(interval);
+    };
+
+    startAutoSlide();
+
+    // Cleanup function
+    return () => {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+    };
+  }, [isPaused, slides.length]); // Restart interval when pause state changes or slides change
+
+  // Handle slider interactions
+  const handleSliderInteraction = () => {
+    setIsPaused(true);
+
+    // Use a cleanup timeout to resume auto-sliding
+    const timeoutId = setTimeout(() => {
+      setIsPaused(false);
+    }, 8000);
+
+    return () => clearTimeout(timeoutId);
   };
+
+  // Update handleSlideChange for dots navigation
+
 
   const handleOptionChange = (option: OptionType): void => {
     setActiveOption(option);
@@ -147,53 +184,10 @@ const DashboardPage = () => {
             </div>
 
             {/* ===== SLIDER SECTION ===== */}
-            <div className={`slider-div ${themeClasses.card} p-4 rounded-lg`}>
-              <div className="main-slider flex flex-col sm:flex-row">
-                {/* Slider Image */}
-                <div className="slider-image">
-                  <Image src={slides[currentSlide].image} width={189} height={195} alt="slider" className="rounded-[8px] " />
-                </div>
-
-                {/* Slider Content */}
-                <div className="slider-right ml-0 sm:ml-6 mt-4 sm:mt-0 flex flex-col justify-between">
-                  <div className="slider-tag">
-                    <p className={`text-[12px] leading-[145%] font-medium w-[241px] h-[17px] ${themeClasses.lightText} font-sora`}>{slides[currentSlide].tag}</p>
-                  </div>
-
-                  <div className="slider-main">
-                    <h3 className="text-[20px] leading-[145%] w-[241px] h-[29px] font-semibold font-sora">{slides[currentSlide].title}</h3>
-                  </div>
-
-                  <div className="slider-text">
-                    <p className={`text-[12px] leading-[100%] w-[241px] h-[15px] font-light  ${themeClasses.subtext} font-sora`}>{slides[currentSlide].text}</p>
-                  </div>
-
-                  <div className="slider-button">
-                    <button className="button bg-[#EBFDEB] leading-[145%] text-green-800 p-[8px] gap-[8px] rounded-full font-sora font-light text-[12px]  inline-block">
-                      {slides[currentSlide].points}
-                    </button>
-                  </div>
-
-                  <div className="slider-big-button mt-2">
-                    <div className="bg-[#2E6650] text-white p-[8px] gap-[8px] w-[99px] h-[33px] rounded-full text-center cursor-pointer hover:bg-green-700 transition-colors font-normal text-[12px] leading-[145%] font-sora">
-                      <p>Start quest</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Slider Controls */}
-              <div className="slider-control mt-4 flex justify-center space-x-2">
-                {slides.map((_, index) => (
-                  <div
-                    key={index}
-                    onClick={() => handleSlideChange(index)}
-                    className={`w-2 h-2 rounded-full cursor-pointer ${index === currentSlide ? 'bg-green-600' : `${darkMode ? 'bg-gray-600' : 'bg-gray-300'}`
-                      }`}
-                  />
-                ))}
-              </div>
+            <div>
+              <Slider slides={slides} />
             </div>
+
 
             {/* ===== ANALYTICS SECTION ===== */}
             <div className={`left-bottom ${themeClasses.card} px-4 py-6 flex flex-col border-[1px] border-[#F2F2F2] gap-[24px] rounded-lg`}>
@@ -202,8 +196,8 @@ const DashboardPage = () => {
                 <div className="options flex space-x-4">
                   <div
                     className={`loss-prediction bg-white border-[1px] border-[#F2F2F2] cursor-pointer px-[10px] py-[8px] gap-[8px] rounded-full font-sora ${activeOption === 'loss-prediction'
-                        ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
-                        : themeClasses.buttonSecondary
+                      ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
+                      : themeClasses.buttonSecondary
                       }`}
                     onClick={() => handleOptionChange('loss-prediction')}
                   >
@@ -212,8 +206,8 @@ const DashboardPage = () => {
 
                   <div
                     className={`harvest cursor-pointer bg-white border-[1px] border-[#F2F2F2] px-[10px] py-[8px] gap-[8px] rounded-full font-sora ${activeOption === 'harvest-analytic'
-                        ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
-                        : themeClasses.buttonSecondary
+                      ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
+                      : themeClasses.buttonSecondary
                       }`}
                     onClick={() => handleOptionChange('harvest-analytic')}
                   >
