@@ -139,6 +139,7 @@ export default function LoginPage() {
               Sign up
             </Link>
           </p>
+          <p className='font-sora text-[#606060]'><strong>Note: This is a demo frontend app and is not intended for production use. Type in an email and password to login</strong></p>
         </div>
       </div>
     </div>
