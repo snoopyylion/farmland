@@ -321,7 +321,7 @@ const DataQuestPage = () => {
                 <div className={`empty-state ${themeClasses.lightBg} p-8 rounded-lg text-center`}>
                   <Image src="/icons/dataquest.png" alt="No active quests" width={64} height={64} className="mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No Active Quests</h3>
-                  <p className={`text-sm ${themeClasses.subtext} mb-4`}>You've completed all available quests. Check back soon for new challenges!</p>
+                  <p className={`text-sm ${themeClasses.subtext} mb-4`}>You&apos;ve completed all available quests. Check back soon for new challenges!</p>
                   <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium py-2 px-4 rounded-lg">
                     Refresh Quests
                   </button>

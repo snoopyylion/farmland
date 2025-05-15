@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
 
 // Define crop risk data type
 type CropRiskData = {
