@@ -70,7 +70,7 @@ const Sidebar = ({ collapsed, setCollapsed }: SidebarProps) => {
       </div>
       
       {/* Logout Button */}
-      <div className="p-4">
+      <Link href="/" className="p-4">
         <div className={clsx(
           "flex items-center p-[8px] rounded-md gap-[12px] justify-center cursor-pointer border-[0.5px] border-[#fff]/10 hover:bg-red-100 transition",
           collapsed ? "w-full" : "w-[234px]"
@@ -78,7 +78,7 @@ const Sidebar = ({ collapsed, setCollapsed }: SidebarProps) => {
           <Image src="/img/login.png" alt="Logout" width={20} height={20} />
           {!collapsed && <span className="text-[#FFCDCD] font-medium leading-[100%] font-sora text-[14px]">Log Out</span>}
         </div>
-      </div>
+      </Link>
     </aside>
   )
 }
