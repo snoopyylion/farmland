@@ -14,8 +14,8 @@ interface SidebarProps {
 const navLinks = [
   { label: 'Dashboard', icon: '/img/dashboard.png', path: '/dashboard' },
   { label: 'Data Quest', icon: '/img/dataquest.png', path: '/dashboard/data-quest' },
-  { label: 'Leaderboard', icon: '/img/Shape.png', path: '/dashboard/leaderboard' },
-  { label: 'Loss Prediction', icon: '/img/Info.png', path: '/dashboard/loss-pred' },
+  { label: 'Leaderboard', icon: '/img/shape.png', path: '/dashboard/leaderboard' },
+  { label: 'Loss Prediction', icon: '/img/info.png', path: '/dashboard/loss-pred' },
   { label: 'Learn', icon: '/img/teacher.png', path: '/dashboard/learn' },
 ]
 

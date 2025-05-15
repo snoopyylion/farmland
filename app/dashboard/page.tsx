@@ -53,14 +53,14 @@ const DashboardPage = () => {
       title: "Storage Master",
       text: "Optimize your storage facilities and reduce waste",
       points: "100 pts",
-      image: "/img/hero.png"
+      image: "/img/storage.png"
     },
     {
       tag: "SPECIAL EVENT",
       title: "Market Connect",
       text: "Connect with new buyers and expand your network",
       points: "150 pts",
-      image: "/img/hero.png"
+      image: "/img/market-access.jpeg"
     }
   ];
 
