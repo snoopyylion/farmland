@@ -1,5 +1,6 @@
 'use client'
 
+import Header from '@/components/Header';
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 
@@ -156,50 +157,7 @@ const DataQuestPage = () => {
     <div className={`w-full font-sora ${themeClasses.container} min-h-screen`}>
       <div className="dashboard-container flex flex-col p-2 sm:p-4 max-w-full sm:max-w-7xl mx-auto">
         {/* ===== HEADER SECTION ===== */}
-        <div className="header flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 px-2 sm:px-4 py-2 gap-y-4">
-          <div className="header-text text-lg sm:text-xl md:text-2xl font-semibold">
-            Data Quest
-          </div>
-
-          <div className="ranking flex items-center justify-center w-full sm:w-auto gap-4 sm:gap-6">
-            {/* Streak and points display */}
-            <div className="thundercoin flex items-center space-x-2 sm:space-x-4">
-              <div className="thunder3 flex items-center space-x-1 sm:space-x-2">
-                <div className="img">
-                  <Image src="/icons/Streak_On.png" alt="streak" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div className="number font-semibold text-base sm:text-lg md:text-xl">
-                  3
-                </div>
-              </div>
-
-              <div className="coin-num flex items-center space-x-1 sm:space-x-2">
-                <div className="img">
-                  <Image src="/icons/Coin.png" alt="coin" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div className="number font-semibold text-base sm:text-lg md:text-xl">
-                  2.1k
-                </div>
-              </div>
-            </div>
-
-            {/* Notification and user profile */}
-            <div className="alertuser flex items-center space-x-2 sm:space-x-4">
-              <div className="alert flex items-center space-x-2 relative">
-                <div className="img">
-                  <Image src="/icons/notification.png" alt="notification" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium rounded-full w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center">
-                  3
-                </div>
-              </div>
-
-              <div className="user">
-                <Image src="/icons/user.png" alt="user" width={28} height={28} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header title="Data Quests" />
 
         {/* ===== QUEST STATS OVERVIEW ===== */}
         <div className={`stats-overview grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6`}>
