@@ -9,21 +9,21 @@ const Testimonials = () => {
       quote: "FarmLand AI increased our crop yield by 30% in just one season. The analysis tools are game-changing.",
       author: "Sarah Thompson",
       role: "Orchard Owner, California",
-      image: "/img/testimonial1.jpg"
+      image: "/img/farmman.jpg"
     },
     {
       id: 2,
       quote: "The soil analysis feature saved us thousands on unnecessary fertilizers. Truly revolutionary technology.",
       author: "Michael Rodriguez",
       role: "Vineyard Manager, Oregon",
-      image: "/img/testimonial2.jpg"
+      image: "/img/farmman2.jpg"
     },
     {
       id: 3,
       quote: "Easy to use interface with powerful insights. Worth every penny for our family farm.",
       author: "Emma Johnson",
       role: "Dairy Farmer, Wisconsin",
-      image: "/img/testimonial3.jpg"
+      image: "/img/farmwoamn.jpg"
     }
   ];
   return (

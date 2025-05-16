@@ -1,5 +1,8 @@
 'use client'
 
+import Header from '@/components/Header';
+import LearningProgress from '@/components/LearningProgress';
+import UpcomingWebinar from '@/components/UpcomingWebinar';
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 
@@ -32,8 +35,9 @@ const LearnPage = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'modules' | 'articles'>('modules');
   const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [screenSize, setScreenSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>('lg');
 
-  // Effect to detect system color scheme
+  // Effect to detect system color scheme and screen size
   useEffect(() => {
     // Check if user prefers dark mode
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -44,8 +48,35 @@ const LearnPage = () => {
     const handleChange = (e: MediaQueryListEvent): void => setDarkMode(e.matches);
     mediaQuery.addEventListener('change', handleChange);
 
+    // Function to handle screen size changes
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 480) {
+        setScreenSize('xs');
+      } else if (width < 640) {
+        setScreenSize('sm');
+      } else if (width < 768) {
+        setScreenSize('md');
+      } else if (width < 1024) {
+        setScreenSize('lg');
+      } else if (width < 1280) {
+        setScreenSize('xl');
+      } else {
+        setScreenSize('2xl');
+      }
+    };
+
+    // Set initial screen size
+    handleResize();
+
+    // Add resize event listener
+    window.addEventListener('resize', handleResize);
+
     // Cleanup function
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Sample learning modules data
@@ -141,8 +172,8 @@ const LearnPage = () => {
   ];
 
   // Filter content based on active filter
-  const filteredModules = activeFilter === 'all' 
-    ? learningModules 
+  const filteredModules = activeFilter === 'all'
+    ? learningModules
     : learningModules.filter(module => module.tags.includes(activeFilter));
 
   const filteredArticles = activeFilter === 'all'
@@ -182,151 +213,121 @@ const LearnPage = () => {
     }
   };
 
+  // Get grid columns based on screen size
+  const getGridColumns = () => {
+    switch (screenSize) {
+      case 'xs':
+        return 'grid-cols-1';
+      case 'sm':
+        return 'grid-cols-1';
+      case 'md':
+        return 'grid-cols-1';
+      case 'lg':
+        return 'grid-cols-2';
+      case 'xl':
+      case '2xl':
+        return 'grid-cols-2 xl:grid-cols-3';
+      default:
+        return 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3';
+    }
+  };
+
+  // Get padding based on screen size
+  const getPadding = () => {
+    switch (screenSize) {
+      case 'xs':
+        return 'p-2';
+      case 'sm':
+        return 'p-3';
+      case 'md':
+        return 'p-4';
+      case 'lg':
+        return 'p-5';
+      case 'xl':
+      case '2xl':
+        return 'p-6';
+      default:
+        return 'p-3 sm:p-4 md:p-5 lg:p-6';
+    }
+  };
+
+  // Get gap based on screen size
+  const getGap = () => {
+    switch (screenSize) {
+      case 'xs':
+        return 'gap-2';
+      case 'sm':
+        return 'gap-2.5';
+      case 'md':
+        return 'gap-3';
+      case 'lg':
+        return 'gap-4';
+      case 'xl':
+      case '2xl':
+        return 'gap-5';
+      default:
+        return 'gap-2 sm:gap-3 md:gap-4 lg:gap-5';
+    }
+  };
+
   return (
-    <div className={`w-full font-sora ${themeClasses.container}`}>
-      <div className="dashboard-container flex flex-col p-4 max-w-7xl mx-auto">
+    <div className={`w-full min-h-screen font-sora ${themeClasses.container}`}>
+      <div className={`dashboard-container flex flex-col p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 max-w-7xl mx-auto`}>
         {/* ===== HEADER SECTION ===== */}
-        <div className="header flex justify-between items-center mb-6 px-4 py-2">
-          <div className="header-text w-full font-sora text-[20px] leading-[100%] font-semibold flex items-center">
-            Learn
-          </div>
-
-          <div className="ranking flex items-center gap-[24px] space-x-4">
-            {/* Streak and points display */}
-            <div className="thundercoin flex items-center space-x-4">
-              <div className="thunder3 flex items-center space-x-2">
-                <div className="img">
-                  <Image src="/icons/Streak_On.png" alt="streak" width={24} height={24} priority />
-                </div>
-                <div className="number font-semibold leading-[100%] text-[20px] font-sora">
-                  3
-                </div>
-              </div>
-
-              <div className="coin-num flex items-center space-x-2">
-                <div className="img">
-                  <Image src="/icons/Coin.png" alt="coin" width={24} height={24} priority />
-                </div>
-                <div className="number font-semibold leading-[100%] text-[20px] font-sora">
-                  2.1k
-                </div>
-              </div>
-            </div>
-
-            {/* Notification and user profile */}
-            <div className="alertuser flex items-center space-x-4">
-              <div className="alert flex items-center space-x-2 relative">
-                <div className="img">
-                  <Image src="/icons/notification.png" alt="notification" width={24} height={24} priority />
-                </div>
-                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium leading-[120%] rounded-full w-4 h-4 flex items-center justify-center font-sora">
-                  3
-                </div>
-              </div>
-
-              <div className="user">
-                <Image src="/icons/user.png" alt="user" width={32} height={32} className="rounded-full" priority />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header title="Learn" />
 
         {/* ===== LEARNING PROGRESS SECTION ===== */}
-        <div className={`${themeClasses.card} p-6 rounded-lg border ${themeClasses.border} mb-6`}>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-            <div>
-              <h2 className="text-xl font-bold mb-1 font-sora">Your Learning Journey</h2>
-              <p className={`text-sm ${themeClasses.subtext}`}>Keep learning to earn more points and badges</p>
-            </div>
-            <div className="flex items-center mt-4 md:mt-0">
-              <div className="mr-4">
-                <div className="text-xs text-gray-500 mb-1">Modules Completed</div>
-                <div className="flex items-center">
-                  <div className="mr-2">
-                    <Image src="/icons/module-complete.png" alt="Modules" width={20} height={20} priority />
-                  </div>
-                  <span className="font-medium">1/4</span>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs text-gray-500 mb-1">Points Earned</div>
-                <div className="flex items-center">
-                  <div className="mr-2">
-                    <Image src="/icons/Coin.png" alt="Points" width={20} height={20} priority />
-                  </div>
-                  <span className="font-medium">250</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Overall Progress Bar */}
-          <div className="mb-2">
-            <div className="flex justify-between mb-1">
-              <span className="text-xs text-gray-500">Overall Progress</span>
-              <span className="text-xs font-medium">25%</span>
-            </div>
-            <div className={`h-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full`}>
-              <div className="h-full bg-[#2E6650] rounded-full" style={{ width: '25%' }}></div>
-            </div>
-          </div>
-          
-          {/* Next Recommended Module */}
-          <div className={`mt-6 p-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg`}>
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium">Recommended Next:</h3>
-              <span className={`text-xs px-2 py-1 ${getDifficultyColor('Intermediate')} rounded-full`}>Intermediate</span>
-            </div>
-            <p className="font-medium mb-1">Advanced Storage Techniques</p>
-            <p className={`text-sm ${themeClasses.subtext} mb-3`}>Continue where you left off (25% complete)</p>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <Image src="/icons/clock.png" alt="Duration" width={16} height={16} className="mr-1" priority />
-                <span className="text-xs text-gray-500">45 mins</span>
-              </div>
-              <button className="bg-[#2E6650] text-white px-4 py-1 rounded-full text-sm">
-                Continue
-              </button>
-            </div>
-          </div>
-        </div>
+        <LearningProgress
+          darkMode={darkMode}
+          themeClasses={themeClasses}
+          modulesCompleted={{ completed: 1, total: 4 }}
+          pointsEarned={250}
+          overallProgress={25}
+          nextModule={{
+            title: "Advanced Storage Techniques",
+            difficulty: "Intermediate",
+            progress: 25,
+            duration: "45 mins",
+          }}
+          getDifficultyColor={getDifficultyColor}
+        />
 
         {/* ===== CONTENT SECTION ===== */}
-        <div className={`${themeClasses.card} rounded-lg border ${themeClasses.border}`}>
+        <div className={`${themeClasses.card} rounded-lg border ${themeClasses.border} mt-3 sm:mt-4 md:mt-5 lg:mt-6`}>
           {/* Tabs Navigation */}
           <div className="flex border-b border-gray-200 dark:border-gray-700">
             <button
               onClick={() => setActiveTab('modules')}
-              className={`px-6 py-3 text-sm font-medium ${
-                activeTab === 'modules'
-                  ? 'border-b-2 border-[#2E6650] text-[#2E6650] dark:text-green-400'
-                  : `${themeClasses.subtext}`
-              }`}
+              className={`flex-1 sm:flex-none px-3 xs:px-4 sm:px-6 py-2 sm:py-3 text-xs xs:text-sm font-medium ${activeTab === 'modules'
+                ? 'border-b-2 border-[#2E6650] text-[#2E6650] dark:text-green-400'
+                : `${themeClasses.subtext}`
+                } transition-colors`}
+              aria-label="View learning modules"
             >
               Learning Modules
             </button>
             <button
               onClick={() => setActiveTab('articles')}
-              className={`px-6 py-3 text-sm font-medium ${
-                activeTab === 'articles'
-                  ? 'border-b-2 border-[#2E6650] text-[#2E6650] dark:text-green-400'
-                  : `${themeClasses.subtext}`
-              }`}
+              className={`flex-1 sm:flex-none px-3 xs:px-4 sm:px-6 py-2 sm:py-3 text-xs xs:text-sm font-medium ${activeTab === 'articles'
+                ? 'border-b-2 border-[#2E6650] text-[#2E6650] dark:text-green-400'
+                : `${themeClasses.subtext}`
+                } transition-colors`}
+              aria-label="View articles"
             >
               Articles
             </button>
           </div>
 
           {/* Filter Tags */}
-          <div className="p-4 border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-            <div className="flex space-x-2">
+          <div className="p-2 xs:p-3 sm:p-4 md:p-5 border-b border-gray-200 dark:border-gray-700 overflow-x-auto scrollbar-thin">
+            <div className="flex space-x-1.5 xs:space-x-2 md:space-x-3 min-w-max">
               <button
                 onClick={() => setActiveFilter('all')}
-                className={`px-3 py-1 rounded-full text-sm whitespace-nowrap ${
-                  activeFilter === 'all'
-                    ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
-                    : themeClasses.buttonSecondary
-                }`}
+                className={`px-1.5 xs:px-2 sm:px-3 py-0.5 xs:py-1 rounded-full text-xs whitespace-nowrap ${activeFilter === 'all'
+                  ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
+                  : themeClasses.buttonSecondary
+                  } transition-colors focus:outline-none focus:ring-2 focus:ring-green-500`}
+                aria-label="Show all content"
               >
                 All
               </button>
@@ -334,11 +335,11 @@ const LearnPage = () => {
                 <button
                   key={index}
                   onClick={() => setActiveFilter(tag)}
-                  className={`px-3 py-1 rounded-full text-sm whitespace-nowrap ${
-                    activeFilter === tag
-                      ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
-                      : themeClasses.buttonSecondary
-                  }`}
+                  className={`px-1.5 xs:px-2 sm:px-3 py-0.5 xs:py-1 rounded-full text-xs whitespace-nowrap ${activeFilter === tag
+                    ? 'bg-[#E8F5F0] text-[#2E6650] font-medium'
+                    : themeClasses.buttonSecondary
+                    } transition-colors focus:outline-none focus:ring-2 focus:ring-green-500`}
+                  aria-label={`Filter by ${tag}`}
                 >
                   {tag.charAt(0).toUpperCase() + tag.slice(1)}
                 </button>
@@ -347,27 +348,28 @@ const LearnPage = () => {
           </div>
 
           {/* Content Display */}
-          <div className="p-4">
+          <div className="p-2 xs:p-3 sm:p-4 md:p-5">
             {/* Modules Tab Content */}
             {activeTab === 'modules' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 xs:gap-3 sm:gap-4 md:gap-5`}>
                 {filteredModules.length > 0 ? (
                   filteredModules.map((module, index) => (
                     <div
                       key={index}
-                      className={`${themeClasses.moduleCard} border ${themeClasses.border} rounded-lg overflow-hidden transition-all duration-200 hover:shadow-md`}
+                      className={`${themeClasses.moduleCard} border ${themeClasses.border} rounded-lg overflow-hidden transition-all duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-green-500`}
                     >
-                      <div className="h-40 relative bg-gray-200 dark:bg-gray-700">
+                      <div className="h-24 xs:h-28 sm:h-32 md:h-40 relative bg-gray-200 dark:bg-gray-700">
                         <Image
                           src={module.image}
                           alt={module.title}
-                          layout="fill"
-                          objectFit="cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 33vw"
+                          style={{ objectFit: "cover" }}
                           className="opacity-90"
                           priority
                         />
                         <div className="absolute bottom-2 left-2">
-                          <span className={`text-xs px-2 py-1 ${getDifficultyColor(module.difficulty)} rounded-full`}>
+                          <span className={`text-xs px-1.5 xs:px-2 py-0.5 xs:py-1 ${getDifficultyColor(module.difficulty)} rounded-full`}>
                             {module.difficulty}
                           </span>
                         </div>
@@ -380,25 +382,41 @@ const LearnPage = () => {
                           </div>
                         )}
                       </div>
-                      <div className="p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-medium">{module.title}</h3>
-                          <div className="flex items-center text-xs ml-2">
-                            <Image src="/icons/Coin.png" alt="Points" width={16} height={16} className="mr-1" priority />
+                      <div className="p-2 xs:p-3 sm:p-4">
+                        <div className="flex justify-between items-start mb-1 xs:mb-2">
+                          <h3 className="text-xs xs:text-sm sm:text-base font-medium line-clamp-2">{module.title}</h3>
+                          <div className="flex items-center text-xs ml-1 xs:ml-2 flex-shrink-0">
+                            <Image 
+                              src="/icons/Coin.png" 
+                              alt="Points" 
+                              width={16} 
+                              height={16} 
+                              className="w-3 h-3 xs:w-4 xs:h-4 mr-0.5 xs:mr-1" 
+                              priority 
+                            />
                             <span>{module.points} pts</span>
                           </div>
                         </div>
-                        <p className={`text-sm ${themeClasses.subtext} mb-3`}>{module.description}</p>
+                        <p className={`text-xs sm:text-sm ${themeClasses.subtext} mb-2 xs:mb-3 line-clamp-2`}>{module.description}</p>
                         <div className="flex justify-between items-center">
                           <div className="flex items-center">
-                            <Image src="/icons/clock.png" alt="Duration" width={16} height={16} className="mr-1" priority />
+                            <Image 
+                              src="/icons/clock.png" 
+                              alt="Duration" 
+                              width={16} 
+                              height={16} 
+                              className="w-3 h-3 xs:w-4 xs:h-4 mr-0.5 xs:mr-1" 
+                              priority 
+                            />
                             <span className="text-xs text-gray-500">{module.duration}</span>
                           </div>
-                          <button className={`${
-                            module.progress > 0 
-                              ? 'bg-[#2E6650] text-white' 
+                          <button 
+                            className={`${module.progress > 0
+                              ? 'bg-[#2E6650] hover:bg-[#235040] text-white'
                               : themeClasses.buttonSecondary
-                          } px-3 py-1 rounded-full text-xs`}>
+                              } px-2 xs:px-2.5 sm:px-3 py-0.5 xs:py-1 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            aria-label={module.progress > 0 ? `Continue ${module.title}` : `Start ${module.title}`}
+                          >
                             {module.progress > 0 ? 'Continue' : 'Start'}
                           </button>
                         </div>
@@ -406,10 +424,10 @@ const LearnPage = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="col-span-2 flex flex-col items-center justify-center p-8">
-                    <Image src="/icons/empty-state.png" alt="No modules found" width={80} height={80} priority />
-                    <p className="mt-4 text-center font-medium">No modules found</p>
-                    <p className={`mt-2 text-sm ${themeClasses.subtext} text-center`}>
+                  <div className="col-span-full flex flex-col items-center justify-center p-4 sm:p-8">
+                    <Image src="/icons/empty-state.png" alt="No modules found" width={80} height={80} priority className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />
+                    <p className="mt-3 xs:mt-4 text-center font-medium text-xs xs:text-sm sm:text-base">No modules found</p>
+                    <p className={`mt-1 xs:mt-2 text-xs sm:text-sm ${themeClasses.subtext} text-center max-w-xs`}>
                       Try changing your filter or check back later for new content
                     </p>
                   </div>
@@ -419,40 +437,51 @@ const LearnPage = () => {
 
             {/* Articles Tab Content */}
             {activeTab === 'articles' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className={`grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2 xs:gap-3 sm:gap-4 md:gap-5`}>
                 {filteredArticles.length > 0 ? (
                   filteredArticles.map((article, index) => (
                     <div
                       key={index}
-                      className={`${themeClasses.moduleCard} border ${themeClasses.border} rounded-lg overflow-hidden transition-all duration-200 hover:shadow-md`}
+                      className={`${themeClasses.moduleCard} border ${themeClasses.border} rounded-lg overflow-hidden transition-all duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-green-500`}
                     >
-                      <div className="p-4">
+                      <div className="p-2 xs:p-3 sm:p-4">
                         <div className="flex items-start">
-                          <div className="w-16 h-16 mr-3 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden relative flex-shrink-0">
+                          <div className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 mr-2 sm:mr-3 rounded bg-gray-200 dark:bg-gray-700 overflow-hidden relative flex-shrink-0">
                             <Image
                               src={article.image}
                               alt={article.title}
-                              layout="fill"
-                              objectFit="cover"
+                              fill
+                              sizes="(max-width: 640px) 40px, (max-width: 768px) 48px, 64px"
+                              style={{ objectFit: "cover" }}
                               priority
                             />
                           </div>
-                          <div>
-                            <h3 className="font-medium mb-1 line-clamp-2">{article.title}</h3>
-                            <p className={`text-xs ${themeClasses.subtext} mb-2`}>
+                          <div className="min-w-0">
+                            <h3 className="text-xs xs:text-sm sm:text-base font-medium mb-0.5 xs:mb-1 line-clamp-2">{article.title}</h3>
+                            <p className={`text-xs ${themeClasses.subtext} mb-0.5 xs:mb-1 sm:mb-2 whitespace-nowrap overflow-hidden text-ellipsis`}>
                               By {article.author} • {article.date}
                             </p>
                           </div>
                         </div>
-                        <p className={`text-sm ${themeClasses.subtext} mt-2 mb-3 line-clamp-2`}>
+                        <p className={`text-xs sm:text-sm ${themeClasses.subtext} mt-1.5 xs:mt-2 mb-2 xs:mb-3 line-clamp-2`}>
                           {article.summary}
                         </p>
                         <div className="flex justify-between items-center">
                           <div className="flex items-center">
-                            <Image src="/icons/clock.png" alt="Read time" width={16} height={16} className="mr-1" priority />
+                            <Image 
+                              src="/icons/clock.png" 
+                              alt="Read time" 
+                              width={16} 
+                              height={16} 
+                              className="w-3 h-3 xs:w-4 xs:h-4 mr-0.5 xs:mr-1" 
+                              priority 
+                            />
                             <span className="text-xs text-gray-500">{article.readTime} read</span>
                           </div>
-                          <button className={`${themeClasses.buttonSecondary} px-3 py-1 rounded-full text-xs`}>
+                          <button 
+                            className={`${themeClasses.buttonSecondary} px-2 xs:px-2.5 sm:px-3 py-0.5 xs:py-1 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            aria-label={`Read ${article.title}`}
+                          >
                             Read More
                           </button>
                         </div>
@@ -460,10 +489,10 @@ const LearnPage = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="col-span-2 flex flex-col items-center justify-center p-8">
-                    <Image src="/icons/empty-state.png" alt="No articles found" width={80} height={80} priority />
-                    <p className="mt-4 text-center font-medium">No articles found</p>
-                    <p className={`mt-2 text-sm ${themeClasses.subtext} text-center`}>
+                  <div className="col-span-full flex flex-col items-center justify-center p-4 sm:p-8">
+                    <Image src="/icons/empty-state.png" alt="No articles found" width={80} height={80} priority className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20" />
+                    <p className="mt-3 xs:mt-4 text-center font-medium text-xs xs:text-sm sm:text-base">No articles found</p>
+                    <p className={`mt-1 xs:mt-2 text-xs sm:text-sm ${themeClasses.subtext} text-center max-w-xs`}>
                       Try changing your filter or check back later for new content
                     </p>
                   </div>
@@ -474,36 +503,14 @@ const LearnPage = () => {
         </div>
 
         {/* ===== UPCOMING WEBINARS ===== */}
-        <div className={`${themeClasses.card} p-4 rounded-lg border ${themeClasses.border} mt-6`}>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="font-semibold">Upcoming Webinars</h2>
-            <button className="text-sm text-[#2E6650] dark:text-green-400 font-medium">View All</button>
-          </div>
-          
-          <div className={`p-4 border ${themeClasses.border} rounded-lg flex flex-col md:flex-row gap-4 items-center`}>
-            <div className="w-full md:w-1/4">
-              <div className="bg-[#E8F5F0] dark:bg-green-900/30 text-[#2E6650] dark:text-green-300 p-3 rounded-lg text-center">
-                <div className="text-2xl font-bold">18</div>
-                <div className="text-sm">May</div>
-              </div>
-            </div>
-            <div className="w-full md:w-2/4">
-              <h3 className="font-medium mb-1">Modern Storage Solutions for Small-Scale Farmers</h3>
-              <p className={`text-sm ${themeClasses.subtext}`}>
-                Learn about affordable and efficient storage solutions from industry experts
-              </p>
-              <div className="flex items-center mt-2">
-                <Image src="/icons/clock.png" alt="Time" width={16} height={16} className="mr-1" priority />
-                <span className="text-xs text-gray-500">2:00 PM - 3:30 PM</span>
-              </div>
-            </div>
-            <div className="w-full md:w-1/4 flex justify-end">
-              <button className="bg-[#2E6650] text-white px-4 py-2 rounded-full text-sm">
-                Register Now
-              </button>
-            </div>
-          </div>
-        </div>
+        <UpcomingWebinar
+          date={18}
+          month="May"
+          title="Modern Storage Solutions for Small-Scale Farmers"
+          description="Learn about affordable and efficient storage solutions from industry experts"
+          time="2:00 PM - 3:30 PM"
+          themeClasses={themeClasses}
+        />
       </div>
     </div>
   )

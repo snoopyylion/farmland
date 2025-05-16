@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
+import Header from '@/components/Header'
 
 // Define crop risk data type
 type CropRiskData = {
@@ -53,7 +54,7 @@ const LossPredictionPage = () => {
       mainFactor: "Humidity",
       recommendation: "Improve storage ventilation",
       lastUpdated: "4hrs ago",
-      icon: "/icons/humidity.png"
+      icon: "/img/humidity.png"
     },
     {
       crop: "Yam",
@@ -121,92 +122,7 @@ const LossPredictionPage = () => {
     <div className={`w-full min-h-screen font-sora ${themeClasses.container}`}>
       <div className="dashboard-container flex flex-col p-2 sm:p-4 max-w-7xl mx-auto">
         {/* ===== HEADER SECTION ===== */}
-        <header className="header flex flex-wrap justify-between items-center mb-4 sm:mb-6 px-2 sm:px-4 py-2 sticky top-0 z-10 bg-inherit backdrop-blur-sm">
-          <div className="header-text w-auto font-sora text-base sm:text-lg md:text-xl lg:text-[20px] leading-[100%] font-semibold">
-            Loss Prediction
-          </div>
-
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden flex items-center" 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
-          </button>
-
-          {/* Desktop view */}
-          <div className="ranking hidden md:flex items-center gap-[24px] space-x-4">
-            {/* Streak and points display */}
-            <div className="thundercoin flex items-center space-x-4">
-              <div className="thunder3 flex items-center space-x-2">
-                <div className="img">
-                  <Image src="/icons/Streak_On.png" alt="streak" width={24} height={24} />
-                </div>
-                <div className="number font-semibold leading-[100%] text-lg md:text-[20px] font-sora">
-                  3
-                </div>
-              </div>
-
-              <div className="coin-num flex items-center space-x-2">
-                <div className="img">
-                  <Image src="/icons/Coin.png" alt="coin" width={24} height={24} />
-                </div>
-                <div className="number font-semibold leading-[100%] text-lg md:text-[20px] font-sora">
-                  2.1k
-                </div>
-              </div>
-            </div>
-
-            {/* Notification and user profile */}
-            <div className="alertuser flex items-center space-x-4">
-              <div className="alert flex items-center space-x-2 relative">
-                <div className="img">
-                  <Image src="/icons/notification.png" alt="notification" width={24} height={24} />
-                </div>
-                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium leading-[120%] rounded-full w-4 h-4 flex items-center justify-center font-sora">
-                  3
-                </div>
-              </div>
-
-              <div className="user">
-                <Image src="/icons/user.png" alt="user" width={32} height={32} className="rounded-full" />
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Mobile menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden w-full py-4 px-2 rounded-lg mb-4 space-y-4 border-b border-gray-200 dark:border-gray-700">
-            <div className="thundercoin flex items-center justify-around">
-              <div className="thunder3 flex items-center space-x-2">
-                <Image src="/icons/Streak_On.png" alt="streak" width={24} height={24} />
-                <span className="number font-semibold leading-[100%] text-lg font-sora">3</span>
-              </div>
-
-              <div className="coin-num flex items-center space-x-2">
-                <Image src="/icons/Coin.png" alt="coin" width={24} height={24} />
-                <span className="number font-semibold leading-[100%] text-lg font-sora">2.1k</span>
-              </div>
-            </div>
-            
-            <div className="alertuser flex items-center justify-around">
-              <div className="alert flex items-center space-x-2 relative">
-                <Image src="/icons/notification.png" alt="notification" width={24} height={24} />
-                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium leading-[120%] rounded-full w-4 h-4 flex items-center justify-center font-sora">
-                  3
-                </div>
-              </div>
-
-              <div className="user">
-                <Image src="/icons/user.png" alt="user" width={32} height={32} className="rounded-full" />
-              </div>
-            </div>
-          </div>
-        )}
-
+        <Header title="Loss Prediction" />
         {/* ===== MAIN CONTENT ===== */}
         <main className="dashboard-content flex flex-col space-y-4 sm:space-y-6">
           {/* Farm Risk Overview Card */}

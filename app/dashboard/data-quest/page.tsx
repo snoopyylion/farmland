@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Define types for quests data
 type QuestData = {
@@ -20,9 +20,10 @@ const DataQuestPage = () => {
   // State management
   const [selectedTab, setSelectedTab] = useState<'active' | 'completed'>('active');
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
 
   // Effect to detect system color scheme
-  React.useEffect(() => {
+  useEffect(() => {
     // Check if user prefers dark mode
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setDarkMode(isDarkMode);
@@ -32,8 +33,17 @@ const DataQuestPage = () => {
     const handleChange = (e: MediaQueryListEvent): void => setDarkMode(e.matches);
     mediaQuery.addEventListener('change', handleChange);
 
-    // Cleanup function
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    // Track window resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup functions
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Quest data
@@ -130,126 +140,131 @@ const DataQuestPage = () => {
       special: 'border-orange-300 text-orange-800'
     };
 
+    // On smaller screens, make the badges more compact
+    const displayText = windowWidth < 640 
+      ? type.charAt(0).toUpperCase() + type.slice(1) 
+      : (type === 'daily' ? 'DAILY QUEST' : type === 'weekly' ? 'WEEKLY CHALLENGE' : 'SPECIAL EVENT');
+
     return (
       <span className={`text-xs font-semibold px-2 py-1 rounded-full border ${badgeClass[type]}`}>
-        {type === 'daily' ? 'DAILY QUEST' : type === 'weekly' ? 'WEEKLY CHALLENGE' : 'SPECIAL EVENT'}
+        {displayText}
       </span>
     );
   };
 
   return (
-    <div className={`w-full font-sora ${themeClasses.container}`}>
-      <div className="dashboard-container flex flex-col p-4 max-w-7xl mx-auto">
+    <div className={`w-full font-sora ${themeClasses.container} min-h-screen`}>
+      <div className="dashboard-container flex flex-col p-2 sm:p-4 max-w-full sm:max-w-7xl mx-auto">
         {/* ===== HEADER SECTION ===== */}
-        <div className="header flex justify-between items-center mb-6 px-4 py-2">
-          <div className="header-text w-[113px] h-[25px] font-sora text-[20px] leading-[100%] font-semibold">
+        <div className="header flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 px-2 sm:px-4 py-2 gap-y-4">
+          <div className="header-text text-lg sm:text-xl md:text-2xl font-semibold">
             Data Quest
           </div>
 
-          <div className="ranking flex items-center gap-[24px] space-x-4">
+          <div className="ranking flex items-center justify-center w-full sm:w-auto gap-4 sm:gap-6">
             {/* Streak and points display */}
-            <div className="thundercoin flex items-center space-x-4">
-              <div className="thunder3 flex items-center space-x-2">
+            <div className="thundercoin flex items-center space-x-2 sm:space-x-4">
+              <div className="thunder3 flex items-center space-x-1 sm:space-x-2">
                 <div className="img">
-                  <Image src="/icons/Streak_On.png" alt="streak" width={24} height={24} />
+                  <Image src="/icons/Streak_On.png" alt="streak" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="number font-semibold leading-[100%] text-[20px] font-sora">
+                <div className="number font-semibold text-base sm:text-lg md:text-xl">
                   3
                 </div>
               </div>
 
-              <div className="coin-num flex items-center space-x-2">
+              <div className="coin-num flex items-center space-x-1 sm:space-x-2">
                 <div className="img">
-                  <Image src="/icons/Coin.png" alt="coin" width={24} height={24} />
+                  <Image src="/icons/Coin.png" alt="coin" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="number font-semibold leading-[100%] text-[20px] font-sora">
+                <div className="number font-semibold text-base sm:text-lg md:text-xl">
                   2.1k
                 </div>
               </div>
             </div>
 
             {/* Notification and user profile */}
-            <div className="alertuser flex items-center space-x-4">
+            <div className="alertuser flex items-center space-x-2 sm:space-x-4">
               <div className="alert flex items-center space-x-2 relative">
                 <div className="img">
-                  <Image src="/icons/notification.png" alt="notification" width={24} height={24} />
+                  <Image src="/icons/notification.png" alt="notification" width={20} height={20} className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium leading-[120%] rounded-full w-4 h-4 flex items-center justify-center font-sora">
+                <div className="number absolute -top-[2px] -left-[-9px] bg-[#920E0E] text-white text-[8px] font-medium rounded-full w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center">
                   3
                 </div>
               </div>
 
               <div className="user">
-                <Image src="/icons/user.png" alt="user" width={32} height={32} className="rounded-full" />
+                <Image src="/icons/user.png" alt="user" width={28} height={28} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full" />
               </div>
             </div>
           </div>
         </div>
 
         {/* ===== QUEST STATS OVERVIEW ===== */}
-        <div className={`stats-overview grid grid-cols-1 md:grid-cols-4 gap-4 mb-6`}>
-          <div className={`stat-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
+        <div className={`stats-overview grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6`}>
+          <div className={`stat-card ${themeClasses.card} rounded-lg p-2 sm:p-4 border ${themeClasses.border}`}>
             <div className="flex items-center">
-              <div className="mr-3 bg-blue-100 p-2 rounded-full">
-                <Image src="/icons/data-cham.png" alt="Active Quests" width={24} height={24} />
+              <div className="mr-2 sm:mr-3 bg-blue-100 p-1 sm:p-2 rounded-full">
+                <Image src="/icons/data-cham.png" alt="Active Quests" width={16} height={16} className="w-4 h-4 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <p className={`text-sm ${themeClasses.subtext}`}>Active Quests</p>
-                <p className="text-xl font-semibold">{activeQuests.length}</p>
+                <p className={`text-xs sm:text-sm ${themeClasses.subtext}`}>Active Quests</p>
+                <p className="text-sm sm:text-base md:text-xl font-semibold">{activeQuests.length}</p>
               </div>
             </div>
           </div>
           
-          <div className={`stat-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
+          <div className={`stat-card ${themeClasses.card} rounded-lg p-2 sm:p-4 border ${themeClasses.border}`}>
             <div className="flex items-center">
-              <div className="mr-3 bg-green-100 p-2 rounded-full">
-                <Image src="/icons/Streak_On.png" alt="Current Streak" width={24} height={24} />
+              <div className="mr-2 sm:mr-3 bg-green-100 p-1 sm:p-2 rounded-full">
+                <Image src="/icons/Streak_On.png" alt="Current Streak" width={16} height={16} className="w-4 h-4 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <p className={`text-sm ${themeClasses.subtext}`}>Current Streak</p>
-                <p className="text-xl font-semibold">3 days</p>
+                <p className={`text-xs sm:text-sm ${themeClasses.subtext}`}>Current Streak</p>
+                <p className="text-sm sm:text-base md:text-xl font-semibold">3 days</p>
               </div>
             </div>
           </div>
           
-          <div className={`stat-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
+          <div className={`stat-card ${themeClasses.card} rounded-lg p-2 sm:p-4 border ${themeClasses.border}`}>
             <div className="flex items-center">
-              <div className="mr-3 bg-purple-100 p-2 rounded-full">
-                <Image src="/icons/Coin.png" alt="Points Earned" width={24} height={24} />
+              <div className="mr-2 sm:mr-3 bg-purple-100 p-1 sm:p-2 rounded-full">
+                <Image src="/icons/Coin.png" alt="Points Earned" width={16} height={16} className="w-4 h-4 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <p className={`text-sm ${themeClasses.subtext}`}>Points This Week</p>
-                <p className="text-xl font-semibold">450</p>
+                <p className={`text-xs sm:text-sm ${themeClasses.subtext}`}>Points This Week</p>
+                <p className="text-sm sm:text-base md:text-xl font-semibold">450</p>
               </div>
             </div>
           </div>
           
-          <div className={`stat-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
+          <div className={`stat-card ${themeClasses.card} rounded-lg p-2 sm:p-4 border ${themeClasses.border}`}>
             <div className="flex items-center">
-              <div className="mr-3 bg-yellow-100 p-2 rounded-full">
-                <Image src="/icons/check.png" alt="Completed Quests" width={24} height={24} />
+              <div className="mr-2 sm:mr-3 bg-yellow-100 p-1 sm:p-2 rounded-full">
+                <Image src="/icons/check.png" alt="Completed Quests" width={16} height={16} className="w-4 h-4 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <p className={`text-sm ${themeClasses.subtext}`}>Completed Quests</p>
-                <p className="text-xl font-semibold">{completedQuests.length}</p>
+                <p className={`text-xs sm:text-sm ${themeClasses.subtext}`}>Completed Quests</p>
+                <p className="text-sm sm:text-base md:text-xl font-semibold">{completedQuests.length}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* ===== TABS NAVIGATION ===== */}
-        <div className="tabs-container mb-6">
+        <div className="tabs-container mb-4 sm:mb-6">
           <div className="option-button">
-            <div className="options flex space-x-4">
+            <div className="options flex space-x-2 sm:space-x-4">
               <div
-                className={`px-[10px] py-[8px] gap-[8px] rounded-full cursor-pointer font-sora border ${selectedTab === 'active' ? themeClasses.buttonActive : themeClasses.buttonInactive}`}
+                className={`px-2 sm:px-3 md:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-full cursor-pointer font-sora border ${selectedTab === 'active' ? themeClasses.buttonActive : themeClasses.buttonInactive}`}
                 onClick={() => setSelectedTab('active')}
               >
                 <p>Active Quests</p>
               </div>
 
               <div
-                className={`px-[10px] py-[8px] gap-[8px] rounded-full cursor-pointer font-sora border ${selectedTab === 'completed' ? themeClasses.buttonActive : themeClasses.buttonInactive}`}
+                className={`px-2 sm:px-3 md:px-4 py-1 sm:py-2 text-xs sm:text-sm rounded-full cursor-pointer font-sora border ${selectedTab === 'completed' ? themeClasses.buttonActive : themeClasses.buttonInactive}`}
                 onClick={() => setSelectedTab('completed')}
               >
                 <p>Completed Quests</p>
@@ -263,27 +278,27 @@ const DataQuestPage = () => {
           {selectedTab === 'active' ? (
             <div className="active-quests">
               {activeQuests.length > 0 ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:gap-4">
                   {activeQuests.map(quest => (
-                    <div key={quest.id} className={`quest-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
-                      <div className="flex flex-col md:flex-row justify-between">
+                    <div key={quest.id} className={`quest-card ${themeClasses.card} rounded-lg p-3 sm:p-4 border ${themeClasses.border}`}>
+                      <div className="flex flex-col lg:flex-row justify-between">
                         <div className="quest-info flex-1">
-                          <div className="flex items-center mb-2">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
                             {renderQuestTypeBadge(quest.type)}
                             <div className="ml-auto">
                               {renderDifficultyBadge(quest.difficulty)}
                             </div>
                           </div>
-                          <h3 className="text-lg font-semibold mb-2">{quest.title}</h3>
-                          <p className={`text-sm ${themeClasses.subtext} mb-4`}>{quest.description}</p>
+                          <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{quest.title}</h3>
+                          <p className={`text-xs sm:text-sm ${themeClasses.subtext} mb-2 sm:mb-4`}>{quest.description}</p>
                           
                           {quest.progress !== undefined && (
-                            <div className="mb-4">
-                              <div className="flex justify-between text-sm mb-1">
+                            <div className="mb-2 sm:mb-4">
+                              <div className="flex justify-between text-xs sm:text-sm mb-1">
                                 <span>Progress</span>
                                 <span>{quest.progress}%</span>
                               </div>
-                              <div className={`w-full h-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full`}>
+                              <div className={`w-full h-1.5 sm:h-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full`}>
                                 <div 
                                   className="h-full bg-green-500 rounded-full" 
                                   style={{ width: `${quest.progress}%` }}
@@ -294,8 +309,8 @@ const DataQuestPage = () => {
                           
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
-                              <Image src="/icons/Coin.png" alt="points" width={16} height={16} className="mr-1" />
-                              <span className="text-sm font-medium">{quest.points} pts</span>
+                              <Image src="/icons/Coin.png" alt="points" width={14} height={14} className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
+                              <span className="text-xs sm:text-sm font-medium">{quest.points} pts</span>
                             </div>
                             {quest.deadline && (
                               <span className={`text-xs ${themeClasses.subtext}`}>
@@ -305,11 +320,11 @@ const DataQuestPage = () => {
                           </div>
                         </div>
                         
-                        <div className="quest-actions mt-4 md:mt-0 md:ml-4 flex flex-col justify-center">
-                          <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium py-2 px-4 rounded-lg mb-2">
+                        <div className="quest-actions mt-3 lg:mt-0 lg:ml-4 flex flex-row lg:flex-col justify-end gap-2">
+                          <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg">
                             Start Quest
                           </button>
-                          <button className={`${themeClasses.buttonInactive} font-medium py-2 px-4 rounded-lg`}>
+                          <button className={`${themeClasses.buttonInactive} font-medium text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg`}>
                             View Details
                           </button>
                         </div>
@@ -318,11 +333,11 @@ const DataQuestPage = () => {
                   ))}
                 </div>
               ) : (
-                <div className={`empty-state ${themeClasses.lightBg} p-8 rounded-lg text-center`}>
-                  <Image src="/icons/dataquest.png" alt="No active quests" width={64} height={64} className="mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Active Quests</h3>
-                  <p className={`text-sm ${themeClasses.subtext} mb-4`}>You&apos;ve completed all available quests. Check back soon for new challenges!</p>
-                  <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium py-2 px-4 rounded-lg">
+                <div className={`empty-state ${themeClasses.lightBg} p-4 sm:p-8 rounded-lg text-center`}>
+                  <Image src="/icons/dataquest.png" alt="No active quests" width={48} height={48} className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4" />
+                  <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">No Active Quests</h3>
+                  <p className={`text-xs sm:text-sm ${themeClasses.subtext} mb-3 sm:mb-4`}>You&apos;ve completed all available quests. Check back soon for new challenges!</p>
+                  <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg">
                     Refresh Quests
                   </button>
                 </div>
@@ -331,34 +346,34 @@ const DataQuestPage = () => {
           ) : (
             <div className="completed-quests">
               {completedQuests.length > 0 ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-2 sm:gap-4">
                   {completedQuests.map(quest => (
-                    <div key={quest.id} className={`quest-card ${themeClasses.card} rounded-lg p-4 border ${themeClasses.border}`}>
-                      <div className="flex flex-col md:flex-row justify-between">
+                    <div key={quest.id} className={`quest-card ${themeClasses.card} rounded-lg p-3 sm:p-4 border ${themeClasses.border}`}>
+                      <div className="flex flex-col lg:flex-row justify-between">
                         <div className="quest-info flex-1">
-                          <div className="flex items-center mb-2">
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
                             {renderQuestTypeBadge(quest.type)}
                             <div className="ml-auto">
                               {renderDifficultyBadge(quest.difficulty)}
                             </div>
                           </div>
-                          <h3 className="text-lg font-semibold mb-2">{quest.title}</h3>
-                          <p className={`text-sm ${themeClasses.subtext} mb-4`}>{quest.description}</p>
+                          <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{quest.title}</h3>
+                          <p className={`text-xs sm:text-sm ${themeClasses.subtext} mb-2 sm:mb-4`}>{quest.description}</p>
                           
                           <div className="flex items-center justify-between">
                             <div className="flex items-center">
-                              <Image src="/icons/Coin.png" alt="points" width={16} height={16} className="mr-1" />
-                              <span className="text-sm font-medium">{quest.points} pts</span>
+                              <Image src="/icons/Coin.png" alt="points" width={14} height={14} className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
+                              <span className="text-xs sm:text-sm font-medium">{quest.points} pts</span>
                             </div>
-                            <span className="text-sm text-green-500 font-medium flex items-center">
-                              <Image src="/icons/check.png" alt="completed" width={16} height={16} className="mr-1" />
+                            <span className="text-xs sm:text-sm text-green-500 font-medium flex items-center">
+                              <Image src="/icons/check.png" alt="completed" width={14} height={14} className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1" />
                               Completed
                             </span>
                           </div>
                         </div>
                         
-                        <div className="quest-actions mt-4 md:mt-0 md:ml-4 flex flex-col justify-center">
-                          <button className={`${themeClasses.buttonInactive} font-medium py-2 px-4 rounded-lg`}>
+                        <div className="quest-actions mt-3 lg:mt-0 lg:ml-4 flex justify-end">
+                          <button className={`${themeClasses.buttonInactive} font-medium text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg`}>
                             View Details
                           </button>
                         </div>
@@ -367,11 +382,11 @@ const DataQuestPage = () => {
                   ))}
                 </div>
               ) : (
-                <div className={`empty-state ${themeClasses.lightBg} p-8 rounded-lg text-center`}>
-                  <Image src="/icons/dataquest.png" alt="No completed quests" width={64} height={64} className="mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Completed Quests</h3>
-                  <p className={`text-sm ${themeClasses.subtext} mb-4`}>Complete quests to see them here. Start with some easy daily tasks!</p>
-                  <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium py-2 px-4 rounded-lg">
+                <div className={`empty-state ${themeClasses.lightBg} p-4 sm:p-8 rounded-lg text-center`}>
+                  <Image src="/icons/dataquest.png" alt="No completed quests" width={48} height={48} className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4" />
+                  <h3 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">No Completed Quests</h3>
+                  <p className={`text-xs sm:text-sm ${themeClasses.subtext} mb-3 sm:mb-4`}>Complete quests to see them here. Start with some easy daily tasks!</p>
+                  <button className="bg-[#2E6650] hover:bg-[#1D5540] text-white font-medium text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg">
                     View Active Quests
                   </button>
                 </div>
