@@ -15,7 +15,6 @@ export default function RewardCard({
   place,
   iconBg,
   cardBg,
-  badge,
   rewards,
   themeClasses,
 }: RewardCardProps) {
