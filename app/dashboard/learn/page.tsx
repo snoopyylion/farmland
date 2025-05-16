@@ -213,63 +213,6 @@ const LearnPage = () => {
     }
   };
 
-  // Get grid columns based on screen size
-  const getGridColumns = () => {
-    switch (screenSize) {
-      case 'xs':
-        return 'grid-cols-1';
-      case 'sm':
-        return 'grid-cols-1';
-      case 'md':
-        return 'grid-cols-1';
-      case 'lg':
-        return 'grid-cols-2';
-      case 'xl':
-      case '2xl':
-        return 'grid-cols-2 xl:grid-cols-3';
-      default:
-        return 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3';
-    }
-  };
-
-  // Get padding based on screen size
-  const getPadding = () => {
-    switch (screenSize) {
-      case 'xs':
-        return 'p-2';
-      case 'sm':
-        return 'p-3';
-      case 'md':
-        return 'p-4';
-      case 'lg':
-        return 'p-5';
-      case 'xl':
-      case '2xl':
-        return 'p-6';
-      default:
-        return 'p-3 sm:p-4 md:p-5 lg:p-6';
-    }
-  };
-
-  // Get gap based on screen size
-  const getGap = () => {
-    switch (screenSize) {
-      case 'xs':
-        return 'gap-2';
-      case 'sm':
-        return 'gap-2.5';
-      case 'md':
-        return 'gap-3';
-      case 'lg':
-        return 'gap-4';
-      case 'xl':
-      case '2xl':
-        return 'gap-5';
-      default:
-        return 'gap-2 sm:gap-3 md:gap-4 lg:gap-5';
-    }
-  };
-
   return (
     <div className={`w-full min-h-screen font-sora ${themeClasses.container}`}>
       <div className={`dashboard-container flex flex-col p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6 max-w-7xl mx-auto`}>

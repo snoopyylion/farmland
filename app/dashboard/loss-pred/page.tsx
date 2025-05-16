@@ -19,7 +19,6 @@ const LossPredictionPage = () => {
   // State management
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [selectedCrop, setSelectedCrop] = useState<string>('all');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Effect to detect system color scheme
   useEffect(() => {

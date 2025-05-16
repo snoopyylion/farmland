@@ -1,7 +1,6 @@
 'use client'
 
 import Header from '@/components/Header';
-import Image from 'next/image'
 import React, { useState } from 'react'
 import TopFarmers from '@/components/TopFarmerCard';
 import Leaderboard from '@/components/Leaderboard';
