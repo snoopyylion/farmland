@@ -35,7 +35,7 @@ const LearnPage = () => {
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'modules' | 'articles'>('modules');
   const [activeFilter, setActiveFilter] = useState<string>('all');
-  const [screenSize, setScreenSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>('lg');
+  const [, setScreenSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>('lg');
 
   // Effect to detect system color scheme and screen size
   useEffect(() => {
