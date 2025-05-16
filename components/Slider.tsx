@@ -83,7 +83,7 @@ const Slider: React.FC<SliderProps> = ({ slides, interval = 5000 }) => {
                                 {
                                     'top-0 z-20 opacity-100 pointer-events-auto': isActive,
                                     'top-[15px] z-10 opacity-70 pointer-events-none scale-[0.97]': isNext,
-                                    'top-[-15px] z-10 opacity-70 pointer-events-none scale-[0.97]': isPrev,
+                                    'top-[-13px] z-10 opacity-70 pointer-events-none scale-[0.97]': isPrev,
                                     hidden: !isActive && !isNext && !isPrev,
                                 }
                             )}
