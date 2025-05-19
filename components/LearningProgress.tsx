@@ -69,13 +69,13 @@ const LearningProgress: React.FC<LearningProgressProps> = ({
           <span className="text-xs text-gray-500">Overall Progress</span>
           <span className="text-xs font-medium">{overallProgress}%</span>
         </div>
-        <div className={`h-1.5 sm:h-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full`}>
+        <div className={`h-1.5 sm:h-2 ${darkMode ? 'bg-zinc-700' : 'bg-gray-200'} rounded-full`}>
           <div className="h-full bg-[#2E6650] rounded-full" style={{ width: `${overallProgress}%` }}></div>
         </div>
       </div>
 
       {/* Next Recommended Module */}
-      <div className={`mt-3 sm:mt-4 md:mt-5 lg:mt-6 p-2.5 sm:p-3 md:p-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-50'} rounded-lg`}>
+      <div className={`mt-3 sm:mt-4 md:mt-5 lg:mt-6 p-2.5 sm:p-3 md:p-4 ${darkMode ? 'bg-zinc-700' : 'bg-gray-50'} rounded-lg`}>
         <div className="flex items-center justify-between mb-1 sm:mb-2">
           <h3 className="font-medium text-xs sm:text-sm md:text-base">Recommended Next:</h3>
           <span className={`text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 ${getDifficultyColor(nextModule.difficulty)} rounded-full`}>

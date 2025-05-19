@@ -68,7 +68,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({
             onChange={(e) => setSearchTerm(e.target.value)}
             className={`w-full sm:w-auto pl-6 sm:pl-8 pr-2 sm:pr-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm ${
               darkMode
-                ? 'bg-gray-700 text-white border-gray-600'
+                ? 'bg-black/80 text-white border-gray-600'
                 : 'bg-gray-100 text-gray-900 border-gray-200'
             } border`}
           />

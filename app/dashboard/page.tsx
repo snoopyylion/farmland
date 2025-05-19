@@ -97,19 +97,20 @@ const DashboardPage = () => {
 
   // Dynamic theme classes based on dark/light mode
   const themeClasses = {
-    container: darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900',
-    card: darkMode ? 'bg-gray-800 shadow-lg' : 'bg-white shadow-sm',
-    lightBg: darkMode ? 'bg-gray-700' : 'bg-gray-50',
-    header: darkMode ? 'text-white' : 'text-gray-900',
-    subtext: darkMode ? 'text-gray-300' : 'text-gray-600',
-    lightText: darkMode ? 'text-gray-400' : 'text-gray-500',
-    border: darkMode ? 'border-gray-700' : 'border-gray-200',
-    buttonSecondary: darkMode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
-    chartBar: darkMode ? 'bg-green-500' : 'bg-green-400',
-  };
+  container: darkMode ? 'bg-black text-white' : 'bg-white text-gray-900',
+  card: darkMode ? 'bg-zinc-900' : 'bg-white',
+  lightBg: darkMode ? 'bg-zinc-800' : 'bg-gray-50',
+  border: darkMode ? 'border-zinc-700' : 'border-gray-200',
+  subtext: darkMode ? 'text-gray-300' : 'text-gray-600',
+  lightText: darkMode ? 'text-gray-400' : 'text-gray-500',
+  buttonActive: darkMode ? 'bg-green-900 text-green-100 border-green-800' : 'bg-[#E8F5F0] text-[#2E6650] border-[#E8F5F0]',
+  buttonInactive: darkMode ? 'bg-zinc-800 text-gray-300 border-zinc-700' : 'bg-white text-gray-700 border-gray-200',
+  buttonSecondary: darkMode ? 'bg-zinc-800 text-gray-300' : 'bg-white text-gray-700',
+  chartBar: darkMode ? 'bg-green-600' : 'bg-green-500',
+};
 
   return (
-    <div className={`w-full min-h-screen font-sora ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`w-full min-h-screen font-sora ${darkMode ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
       <div className="dashboard-container flex flex-col p-3 sm:p-4 md:p-6 max-w-7xl mx-auto">
         {/* ===== HEADER SECTION ===== */}
         <Header title="Dashboard" />
@@ -164,7 +165,7 @@ const DashboardPage = () => {
               <div className="option-dis">
                 {/* Loss Prediction View */}
                 {activeOption === 'loss-prediction' && (
-                  <div className={`loss-pred ${darkMode ? 'bg-red-900' : 'bg-red-50'} border-l-[4px] border-red-600 p-3 sm:p-4 rounded-lg`}>
+  <div className={`loss-pred ${darkMode ? 'bg-red-950' : 'bg-red-50'} border-l-[4px] border-red-600 p-3 sm:p-4 rounded-lg`}>
                     <div className="flex items-start">
                       <div className="temperature-icon mr-3 sm:mr-4 flex-shrink-0">
                         <Image src="/icons/high-temp.png" alt="temperature" width={32} height={32} className="w-8 h-8 sm:w-9 sm:h-9" />
@@ -200,7 +201,7 @@ const DashboardPage = () => {
 
                 {/* Harvest Analytics View */}
                 {activeOption === 'harvest-analytic' && (
-                  <div className={`harvest-analytic ${darkMode ? 'bg-green-900' : 'bg-green-50'} p-3 sm:p-4 rounded-lg`}>
+  <div className={`harvest-analytic ${darkMode ? 'bg-green-950' : 'bg-green-50'} p-3 sm:p-4 rounded-lg`}>
                     {/* Chart Container */}
                     <div className="chart-container h-32 sm:h-40">
                       <div className="flex h-full justify-between">

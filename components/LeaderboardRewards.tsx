@@ -22,7 +22,7 @@ export default function LeaderboardRewards({ themeClasses }: LeaderboardRewardsP
           <RewardCard
             place="1st Place"
             iconBg="bg-yellow-100"
-            cardBg="bg-yellow-50 dark:bg-gray-700"
+            cardBg="bg-yellow-50 dark:bg-black/80"
             badge="Champion Farmer"
             rewards={[
               "500 bonus points",
@@ -35,7 +35,7 @@ export default function LeaderboardRewards({ themeClasses }: LeaderboardRewardsP
           <RewardCard
             place="2nd Place"
             iconBg="bg-gray-200"
-            cardBg="bg-gray-50 dark:bg-gray-700"
+            cardBg="bg-gray-50 dark:bg-black/80"
             badge="Silver Producer"
             rewards={[
               "300 bonus points",
@@ -48,7 +48,7 @@ export default function LeaderboardRewards({ themeClasses }: LeaderboardRewardsP
           <RewardCard
             place="3rd Place"
             iconBg="bg-amber-100"
-            cardBg="bg-amber-50 dark:bg-gray-700"
+            cardBg="bg-amber-50 dark:bg-black/80"
             badge="Bronze Cultivator"
             rewards={[
               "150 bonus points",

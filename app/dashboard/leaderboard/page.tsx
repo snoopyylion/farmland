@@ -152,21 +152,23 @@ const LeaderboardPage = () => {
 
   // Dynamic theme classes based on dark/light mode
   const themeClasses = {
-    container: darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900',
-    card: darkMode ? 'bg-gray-800 shadow-md' : 'bg-white shadow-sm',
-    cardHeader: darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200',
-    lightBg: darkMode ? 'bg-gray-800' : 'bg-gray-50',
-    tableBg: darkMode ? 'bg-gray-800' : 'bg-white',
-    tableHeader: darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-100 text-gray-700',
-    tableRow: darkMode ? 'border-gray-700 hover:bg-gray-700' : 'border-gray-200 hover:bg-gray-50',
-    header: darkMode ? 'text-white' : 'text-gray-900',
-    subtext: darkMode ? 'text-gray-300' : 'text-gray-600',
-    lightText: darkMode ? 'text-gray-400' : 'text-gray-500',
-    border: darkMode ? 'border-gray-700' : 'border-gray-200',
+    container: darkMode ? 'bg-black text-white' : 'bg-white text-gray-900',
+    card: darkMode ? 'bg-zinc-800 shadow-md' : 'bg-white shadow-sm',
+    cardHeader: darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200',
+    lightBg: darkMode ? 'bg-zinc-800' : 'bg-zinc-50',
+    tableBg: darkMode ? 'bg-zinc-800' : 'bg-white',
+    tableHeader: darkMode ? 'bg-zinc-700 text-zinc-200' : 'bg-zinc-100 text-zinc-700',
+    tableRow: darkMode ? 'border-zinc-700 hover:bg-zinc-700' : 'border-zinc-200 hover:bg-zinc-50',
+    header: darkMode ? 'text-white' : 'text-zinc-900',
+    subtext: darkMode ? 'text-zinc-300' : 'text-zinc-600',
+    lightText: darkMode ? 'text-zinc-400' : 'text-zinc-500',
+    border: darkMode ? 'border-zinc-700' : 'border-zinc-200',
     buttonActive: 'bg-[#E8F5F0] text-[#2E6650] font-medium',
-    buttonInactive: darkMode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
-    highlight: darkMode ? 'bg-gray-700' : 'bg-[#E8F5F0]',
-    userHighlight: 'bg-[#E8F5F0] border-l-4 border-[#2E6650]'
+    buttonInactive: darkMode ? 'bg-zinc-700 text-white hover:bg-zinc-600' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200',
+    highlight: darkMode ? 'bg-zinc-700' : 'bg-[#E8F5F0]',
+    userHighlight: darkMode 
+      ? 'bg-zinc-700 border-l-4 border-emerald-700' 
+      : 'bg-[#E8F5F0] border-l-4 border-[#2E6650]'
   };
 
   return (

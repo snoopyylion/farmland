@@ -107,16 +107,17 @@ const DataQuestPage = () => {
   
   // Dynamic theme classes based on dark/light mode
   const themeClasses = {
-    container: darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900',
-    card: darkMode ? 'bg-gray-800 shadow-md' : 'bg-white shadow-sm',
-    lightBg: darkMode ? 'bg-gray-700' : 'bg-gray-50',
-    header: darkMode ? 'text-white' : 'text-gray-900',
-    subtext: darkMode ? 'text-gray-300' : 'text-gray-600',
-    lightText: darkMode ? 'text-gray-400' : 'text-gray-500',
-    border: darkMode ? 'border-gray-700' : 'border-gray-200',
-    buttonActive: 'bg-[#E8F5F0] text-[#2E6650] font-medium',
-    buttonInactive: darkMode ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
-  };
+  container: darkMode ? 'bg-black text-white' : 'bg-white text-gray-900',
+  card: darkMode ? 'bg-zinc-900' : 'bg-white',
+  lightBg: darkMode ? 'bg-zinc-800' : 'bg-gray-50',
+  border: darkMode ? 'border-zinc-700' : 'border-gray-200',
+  subtext: darkMode ? 'text-gray-300' : 'text-gray-600',
+  lightText: darkMode ? 'text-gray-400' : 'text-gray-500',
+  buttonActive: darkMode ? 'bg-green-900 text-green-100 border-green-800' : 'bg-[#E8F5F0] text-[#2E6650] border-[#E8F5F0]',
+  buttonInactive: darkMode ? 'bg-zinc-800 text-gray-300 border-zinc-700' : 'bg-white text-gray-700 border-gray-200',
+  buttonSecondary: darkMode ? 'bg-zinc-800 text-gray-300' : 'bg-white text-gray-700',
+  chartBar: darkMode ? 'bg-green-600' : 'bg-green-500',
+};
 
   // Function to render difficulty badges
   const renderDifficultyBadge = (difficulty: 'easy' | 'medium' | 'hard') => {
@@ -154,6 +155,7 @@ const DataQuestPage = () => {
   };
 
   return (
+    // dataquest
     <div className={`w-full font-sora ${themeClasses.container} min-h-screen`}>
       <div className="dashboard-container flex flex-col p-2 sm:p-4 max-w-full sm:max-w-7xl mx-auto">
         {/* ===== HEADER SECTION ===== */}
@@ -256,7 +258,7 @@ const DataQuestPage = () => {
                                 <span>Progress</span>
                                 <span>{quest.progress}%</span>
                               </div>
-                              <div className={`w-full h-1.5 sm:h-2 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'} rounded-full`}>
+                              <div className={`w-full h-1.5 sm:h-2 ${darkMode ? 'bg-zinc-800' : 'bg-gray-200'} rounded-full`}>
                                 <div 
                                   className="h-full bg-green-500 rounded-full" 
                                   style={{ width: `${quest.progress}%` }}
